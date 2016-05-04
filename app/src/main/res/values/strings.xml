@@ -1,8 +1,11 @@
 <resources>
-    <string name="app_name">PocketRhythmTrainer</string>
+    <string name="app_name">Pocket Rhythm Trainer</string>
     <string name="music_score">Music Score</string>
+    <string name="tempo">Tempo [BPM]</string>
+    <string name="meter">Meter [beats per bar]</string>
     <string name="play">Play</string>
     <string name="text_duration">Number of bars</string>
     <string name="text_loud">Number of loud bars</string>
     <string name="text_silent">Number of silent bars</string>
+    <string name="title_activity_play_tempo">Play Tempo</string>
 </resources>

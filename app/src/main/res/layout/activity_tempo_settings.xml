@@ -29,8 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tempo"
-            android:id="@+id/text_tempo"
+            android:text="@string/tempo"
             android:textSize="@dimen/font_size_element"
             android:layout_margin="@dimen/margin_element"
             android:layout_column="0"
@@ -39,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/value_tempo"
-            android:hint="90"
+            android:text="90"
             android:layout_column="1"
             android:layout_weight="1"/>
     </TableRow>
@@ -47,7 +46,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Meter"
+            android:text="@string/meter"
             android:id="@+id/text_meter"
             android:textSize="@dimen/font_size_element"
             android:layout_margin="@dimen/margin_element"
@@ -56,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/value_meter"
-            android:hint="90"
+            android:text="4"
             android:layout_column="1"
             android:layout_weight="1"/>
     </TableRow>
@@ -92,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/value_duration"
-            android:hint="160"
+            android:text="160"
             android:layout_column="1"
             android:layout_weight="1"/>
     </TableRow>
@@ -110,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/value_loud"
-            android:hint="3"
+            android:text="3"
             android:layout_column="1"
             android:layout_weight="1"/>
     </TableRow>
@@ -129,7 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/value_silent"
-            android:hint="90"
+            android:text="90"
             android:layout_column="1"
             android:layout_weight="1"/>
     </TableRow>
