@@ -21,18 +21,6 @@ public class PlayTempo extends Activity {
         String s = getText(R.string.tempo) + "  " + getIntent().getStringExtra("tempo");
         s += "\n" + getText(R.string.meter) + "  " + getIntent().getStringExtra("meter");
         textTempo.setText(s);
-
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
-
-
     }
 
 }
