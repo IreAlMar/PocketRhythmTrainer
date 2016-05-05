@@ -91,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/value_duration"
-            android:text="160"
+            android:text="5"
             android:layout_column="1"
             android:layout_weight="1"/>
     </TableRow>

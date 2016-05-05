@@ -8,4 +8,7 @@
     <string name="text_loud">Number of loud bars</string>
     <string name="text_silent">Number of silent bars</string>
     <string name="title_activity_play_tempo">Play Tempo</string>
+    <string name="tap">TAP</string>
+    <string name="start">START</string>
+    <string name="stop">STOP</string>
 </resources>

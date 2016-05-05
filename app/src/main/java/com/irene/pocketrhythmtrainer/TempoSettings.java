@@ -24,6 +24,8 @@ public class TempoSettings extends Activity {
                 intent.putExtra("tempo", editTextTempo.getText().toString());
                 EditText editTextMeter = (EditText) findViewById(R.id.value_meter);
                 intent.putExtra("meter", editTextMeter.getText().toString());
+                EditText editTextDuration = (EditText) findViewById(R.id.value_duration);
+                intent.putExtra("duration", editTextDuration.getText().toString());
                 startActivity(intent);
             }
         });

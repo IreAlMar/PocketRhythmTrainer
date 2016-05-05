@@ -19,5 +19,20 @@
         android:layout_margin="@dimen/margin_element"
         android:layout_column="0"
         android:layout_weight="1"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tap"
+        android:id="@+id/buttonTap"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start"
+        android:id="@+id/buttonStart"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin_element"/>
 
 </RelativeLayout>
