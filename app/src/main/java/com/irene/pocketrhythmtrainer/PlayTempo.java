@@ -22,14 +22,17 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
     private Button buttonTap;
     private Button buttonStart;
     private SoundPool clickSoundPool;
-    private int bars;
     private int tempo;
     private int meter;
+    private int duration;
+    private int loud;
+    private int silent;
     private java.util.Timer scheduler;
     private int t1;
     private int t2;
     private int counter;
     private boolean running;
+    private boolean play;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +41,9 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
         textTempo = (TextView) findViewById(R.id.text_tempo);
         buttonTap = (Button) findViewById(R.id.buttonTap);
         buttonStart = (Button) findViewById(R.id.buttonStart);
-        counter = 0;
+        counter = 1;
         running = false;
+        play = true;
 
         AudioAttributes attributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
@@ -53,11 +57,15 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
 
         tempo = Integer.parseInt(getIntent().getStringExtra("tempo"));
         meter = Integer.parseInt(getIntent().getStringExtra("meter"));
-        bars = Integer.parseInt(getIntent().getStringExtra("duration"));
+        duration = Integer.parseInt(getIntent().getStringExtra("duration"));
+        loud = Integer.parseInt(getIntent().getStringExtra("loud"));
+        silent = Integer.parseInt(getIntent().getStringExtra("silent"));
 
         String s = getText(R.string.tempo) + "  " + tempo;
         s += "\n" + getText(R.string.meter) + "  " + meter;
-        s += "\n" + getText(R.string.text_duration) + " " + bars;
+        s += "\n" + getText(R.string.text_duration) + " " + duration;
+        s += "\n" + getText(R.string.text_loud) + " "+ loud;
+        s += "\n" + getText(R.string.text_silent) + " "+ silent;
         textTempo.setText(s);
 
         buttonStart.setOnClickListener(new View.OnClickListener() {
@@ -70,9 +78,15 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
                     TimerTask task1 = new TimerTask() {
                         @Override
                         public void run() {
-                            clickSoundPool.play(click1Id, 1, 1, 1, 0, 1);
-                            if (counter >= bars){
-                                stop();
+                            int t = loud + silent;
+                            if(loud <= counter-(t)*(counter/(t))){
+                                play = false;
+                            }else{
+                                clickSoundPool.play(click1Id, 1, 1, 1, 0, 1);
+                                play = true;
+                            }
+                            if (counter > duration){
+                                stop();//preguntar por qué se queda pillado en buttonStart.setText(R.string.start);
                             }
                             counter ++;
                         }
@@ -80,7 +94,9 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
                     TimerTask task2 = new TimerTask() {
                         @Override
                         public void run() {
-                            clickSoundPool.play(click2Id, 1, 1, 0, 0, 1);
+                            if (play){
+                                clickSoundPool.play(click2Id, 1, 1, 0, 0, 1);
+                            }
                         }
                     };
                     t2 = 1000 * 60 / tempo;

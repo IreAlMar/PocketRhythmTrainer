@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/value_tempo"
-            android:text="90"
+            android:text="100"
             android:layout_column="1"
             android:layout_weight="1"/>
     </TableRow>
@@ -91,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/value_duration"
-            android:text="5"
+            android:text="20"
             android:layout_column="1"
             android:layout_weight="1"/>
     </TableRow>
@@ -109,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/value_loud"
-            android:text="3"
+            android:text="4"
             android:layout_column="1"
             android:layout_weight="1"/>
     </TableRow>
@@ -128,7 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/value_silent"
-            android:text="90"
+            android:text="3"
             android:layout_column="1"
             android:layout_weight="1"/>
     </TableRow>
