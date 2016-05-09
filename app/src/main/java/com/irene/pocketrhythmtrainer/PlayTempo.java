@@ -10,11 +10,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.lang.*;
 
+import java.util.Timer;
 import java.util.TimerTask;
 
 public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListener {
 
-    private TextView textTempo;
+    private TextView textSettings;
     private Button buttonTap;
     private Button buttonStart;
     private SoundPool clickSoundPool;
@@ -23,7 +24,6 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
     private int duration;
     private int loud;
     private int silent;
-    private java.util.Timer scheduler;
     private int t1;
     private int t2;
     private int accent;
@@ -33,12 +33,13 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
     private boolean play;
     private long[] clickTimes;
     private long[] tappingTimes;
+    private Timer scheduler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_tempo);
-        textTempo = (TextView) findViewById(R.id.text_tempo);
+        textSettings = (TextView) findViewById(R.id.text_tempo);
         buttonTap = (Button) findViewById(R.id.buttonTap);
         buttonStart = (Button) findViewById(R.id.buttonStart);
         buttonTap = (Button) findViewById(R.id.buttonTap);
@@ -57,8 +58,8 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
         final int click1Id = clickSoundPool.load(this, R.raw.beep08b, 1);
         final int click2Id = clickSoundPool.load(this, R.raw.beep07, 1);
 
-        textTempo.setText(getSettings());
-        length = silent * meter * (duration/(loud+silent));
+        textSettings.setText(getSettings());
+        length = silent * meter * (duration/(loud+silent))+1;
         tappingTimes = new long[1000];
         clickTimes = new long[1000];
 
@@ -77,22 +78,19 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
                 if (running == false){
                     running = true;
                     buttonStart.setText(R.string.stop);
-                    scheduler = new java.util.Timer();
-                    TimerTask task1 = new TimerTask() {
+                    scheduler = new Timer();
+                    final TimerTask task1 = new TimerTask() {
                         @Override
                         public void run() {
                             int t = loud + silent;
-                            if(loud <= accent -(t)*(accent /(t))){
+                            if(loud <= accent -(t)*((accent/t))){
                                 play = false;
                             }else{
                                 clickSoundPool.play(click1Id, 1, 1, 1, 0, 1);
                                 play = true;
                             }
                             if (accent > duration){
-                               // stop();//preguntar por qué se queda pillado en buttonStart.setText(R.string.start);
-                                scheduler.cancel();
-                                accent = 0;
-                                running = false;
+                                stop(scheduler);
                             }
                             accent++;
                         }
@@ -103,7 +101,6 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
                             if (play){
                                 clickSoundPool.play(click2Id, 1, 1, 0, 0, 1);
                             }else{
-                                //saveTime(CLICK, silentClick);
                                 clickTimes[silentClick] = System.currentTimeMillis();
                                 silentClick++;
                             }
@@ -114,7 +111,8 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
                     scheduler.scheduleAtFixedRate(task1, 1000, t1);
                     scheduler.scheduleAtFixedRate(task2, 1000, t2);
                 }else{
-                    stop();
+                    Toast.makeText(getApplicationContext(), "Stop", Toast.LENGTH_SHORT).show();
+                    stop(scheduler);
                 }
             }
         });
@@ -135,11 +133,17 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
         return s;
     }
 
-    public void stop(){
+    public void stop(Timer scheduler){
         scheduler.cancel();
-        accent = 0;
+        scheduler.purge();
         running = false;
-        buttonStart.setText(R.string.start);
+        accent = 0;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                buttonStart.setText(R.string.start);
+            }
+        });
     }
 
     protected void createNewSoundPool() {
