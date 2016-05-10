@@ -58,9 +58,10 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
         final int click2Id = clickSoundPool.load(this, R.raw.beep07, 1);
 
         textSettings.setText(getSettings());
-        length = silent * meter * (duration / (loud + silent)) + 1;
-        tappingTimes = new long[1000];
-        clickTimes = new long[1000];
+        length = meter * ((silent * (duration / (loud + silent))) + (1 + (loud+silent) - duration%(loud+silent)));
+        Toast.makeText(getApplicationContext(), "length = " + length, Toast.LENGTH_SHORT).show();
+        tappingTimes = new long[length];
+        clickTimes = new long[length];
 
         buttonTap.setOnClickListener(new View.OnClickListener() {
             @Override
