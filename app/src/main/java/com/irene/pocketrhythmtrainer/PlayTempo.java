@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListener {
+    private static final String TAG = "PlayTempo";
 
     private TextView textSettings; //shows the settings stated by the user in activity_tempo_settings
     private Button buttonTap; //detects the user tapping for the silent bars
@@ -26,24 +28,25 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
     private int loud; //loud bars stated by the user
     private int silent; //silent bars stated by the user
     private int accentCounter; //counts the bars already played
-    private int silentClickCounter; //counts the bits in silent bars time
+    private int silentClickCounter; //counts the beats in silent bars time
     private boolean running; //true if the exercise is running and false if it is not
     private boolean play; //true for loud bars time and false for silent bars time
     private long[] clickTimes; //saves the time in milliseconds of each click for the silent bars time
     private long[] tappingTimes; //saves the time in milliseconds of each user tap for the silent bars time
     private Timer scheduler; //schedules the sounds playing tasks for execution in background threads
+    private int length; //length of the arrays storing the time moments of the tapping and the click in silent periods
+    private int t2; //time interval between bits
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_tempo);
-        int length;
         textSettings = (TextView) findViewById(R.id.text_tempo);
         buttonTap = (Button) findViewById(R.id.buttonTap);
         buttonStart = (Button) findViewById(R.id.buttonStart);
         buttonTap = (Button) findViewById(R.id.buttonTap);
         accentCounter = 1;
-        silentClickCounter = 1;
+        silentClickCounter = 0;
         running = false;
         play = true;
 
@@ -59,15 +62,17 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
 
         textSettings.setText(getSettings());
         length = meter * ((silent * (duration / (loud + silent))) + (1 + (loud+silent) - duration%(loud+silent)));
-        Toast.makeText(getApplicationContext(), "length = " + length, Toast.LENGTH_SHORT).show();
         tappingTimes = new long[length];
         clickTimes = new long[length];
 
         buttonTap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (running) {
-                    tappingTimes[silentClickCounter] = System.currentTimeMillis();
+                if ((!play) && (silentClickCounter<=length)) {
+                    tappingTimes[silentClickCounter-1] = System.currentTimeMillis();
+                }
+                if(running==false){
+                    Toast.makeText(getApplicationContext(), "Press start!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -76,15 +81,14 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
             @Override
             public void onClick(View view) {
                 int t1;
-                int t2;
                 if (running == false) {
                     running = true;
                     buttonStart.setText(R.string.stop);
                     scheduler = new Timer();
                     //task1 is responsible of the strong beat, it also controls playing and muting the click
                     TimerTask task1 = new TimerTask() {
-                        int loudCounter = 1;
-                        int silentCounter = 1;
+                        int loudCounter = 1; //counts the number of loud bars for each cycle
+                        int silentBarsCounter = 1; //counts the number of silent bars for each cycle
 
                         @Override
                         public void run() {
@@ -94,11 +98,11 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
                                 loudCounter++;
                             } else {
                                 play = false;
-                                if (silentCounter >= silent) {
+                                if (silentBarsCounter >= silent) {
                                     loudCounter = 1;
-                                    silentCounter = 1;
+                                    silentBarsCounter = 1;
                                 } else {
-                                    silentCounter++;
+                                    silentBarsCounter++;
                                 }
                             }
                             if (accentCounter > duration) {
@@ -114,8 +118,8 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
                             if (play) {
                                 clickSoundPool.play(click2Id, 1, 1, 0, 0, 1);
                             } else {
-                                clickTimes[silentClickCounter] = System.currentTimeMillis();
                                 silentClickCounter++;
+                                clickTimes[silentClickCounter-1] = System.currentTimeMillis();
                             }
                         }
                     };
@@ -157,11 +161,31 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
             @Override
             public void run() {
                 buttonStart.setText(R.string.start);
+                Toast.makeText(getApplicationContext(), "End of exercise!", Toast.LENGTH_SHORT).show();
             }
         });
+        calculateScore();
     }
 
-    //method used to create a the soundPool
+    private void calculateScore() {
+        String s = new String();
+        long difference;
+        long[] result = new long[length];
+        s += "The time moments for the clicks and taps are: \n";
+        for(int i = 0; i < length; i++){
+            s += "Click:" + i + "  time: " + clickTimes[i] + "\n";
+            s += "Tap:" + i + "  time: " + tappingTimes[i] + "\n";
+            difference = tappingTimes [i] == 0 ? 0 : (t2 - (clickTimes[i] - tappingTimes[i]));
+            difference = difference > 0 ? difference : -difference;
+            result[i] = 100*difference/t2;
+        }
+        Log.e(TAG, s);
+        for (int i = 0; i<length; i++){
+            Log.e(TAG, "Result for i = " + i +" is " + Long.valueOf(result[i]) + "\n");
+        }
+    }
+
+    //method used to create the soundPool
     protected void createNewSoundPool() {
         AudioAttributes attributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)

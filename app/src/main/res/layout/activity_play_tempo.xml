@@ -25,7 +25,8 @@
         android:text="@string/tap"
         android:id="@+id/buttonTap"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:soundEffectsEnabled="false"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
