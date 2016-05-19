@@ -1,7 +1,9 @@
 package com.irene.pocketrhythmtrainer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -18,6 +20,11 @@ import java.util.TimerTask;
 
 public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListener {
     private static final String TAG = "PlayTempo";
+    private static final String STATE_TEMPO = "tempo";
+    private static final String STATE_METER = "meter";
+    private static final String STATE_DURATION = "duration";
+    private static final String STATE_LOUD = "loud";
+    private static final String STATE_SILENT = "silent";
 
     private TextView textSettings; //shows the settings stated by the user in activity_tempo_settings
     private Button buttonTap; //detects the user tapping for the silent bars
@@ -37,6 +44,7 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
     private Timer scheduler; //schedules the sounds playing tasks for execution in background threads
     private int length; //length of the arrays storing the time moments of the tapping and the click in silent periods
     private int t2; //time interval between bits
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,11 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
         running = false;
         play = true;
 
+        prefs = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        if (savedInstanceState == null){
+            textSettings.setText(getSettings());
+        }
+
         AudioAttributes attributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -60,7 +73,6 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
         final int click1Id = clickSoundPool.load(this, R.raw.beep08b, 1);
         final int click2Id = clickSoundPool.load(this, R.raw.beep07, 1);
 
-        textSettings.setText(getSettings());
         length = calculateLength();
         tappingTimes = new long[length];
         clickTimes = new long[length];
@@ -139,6 +151,39 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
             }
         });
     }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current settings state
+        savedInstanceState.putInt(STATE_TEMPO, tempo);
+        savedInstanceState.putInt(STATE_METER, meter);
+        savedInstanceState.putInt(STATE_DURATION, duration);
+        savedInstanceState.putInt(STATE_LOUD, loud);
+        savedInstanceState.putInt(STATE_SILENT, silent);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        // Restore state members from saved instance
+        tempo = savedInstanceState.getInt(STATE_TEMPO);
+        meter = savedInstanceState.getInt(STATE_METER);
+        duration = savedInstanceState.getInt(STATE_DURATION);
+        loud = savedInstanceState.getInt(STATE_LOUD);
+        silent = savedInstanceState.getInt(STATE_SILENT);
+    }
+    /*@Override
+    protected void onStop() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("tempo", Integer.toString(tempo));
+        editor.putString("meter", Integer.toString(meter));
+        editor.putString("duration", Integer.toString(duration));
+        editor.putString("loud", Integer.toString(loud));
+        editor.putString("silent", Integer.toString(silent));
+        editor.apply();
+        super.onStop();
+    }*/
 
     //Starts the EndOfExercise activity.
     private void endOfExercise(long score) {

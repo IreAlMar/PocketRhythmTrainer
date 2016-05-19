@@ -1,8 +1,10 @@
 package com.irene.pocketrhythmtrainer;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,15 +20,18 @@ public class EndOfExercise extends AppCompatActivity {
         textEndOfExercise.setText("End of exercise!\n" + "Your score is: " + getIntent().getStringExtra("score") +"\n");
     }
 
-    private void repeat(){
-
+    public void repeat(View view){
+        //Así no vale, porque depende de TempoSettings
+        Intent intent = new Intent(getApplicationContext(), PlayTempo.class);
+        startActivity(intent);
     }
 
-    private void showScore(){
+    public void showScore(View view){
       //TODO
     }
 
-    private void newExercise(){
-       //TODO
+    public void newExercise(View view){
+        Intent intent = new Intent(getApplicationContext(), TempoSettings.class);
+        startActivity(intent);
     }
 }
