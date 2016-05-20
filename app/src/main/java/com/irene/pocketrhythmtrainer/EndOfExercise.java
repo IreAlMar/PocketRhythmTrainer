@@ -22,8 +22,7 @@ public class EndOfExercise extends AppCompatActivity {
 
     public void repeat(View view){
         //Así no vale, porque depende de TempoSettings
-        Intent intent = new Intent(getApplicationContext(), PlayTempo.class);
-        startActivity(intent);
+        finish();
     }
 
     public void showScore(View view){

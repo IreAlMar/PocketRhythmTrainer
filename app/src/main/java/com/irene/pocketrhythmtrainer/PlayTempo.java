@@ -59,9 +59,12 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
         play = true;
 
         prefs = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
-        if (savedInstanceState == null){
-            textSettings.setText(getSettings());
+        if (savedInstanceState != null){
+            onRestoreInstanceState(savedInstanceState);
+        }else{
+            setSettings();
         }
+        textSettings.setText(getSettingsText());
 
         AudioAttributes attributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
@@ -204,14 +207,17 @@ public class PlayTempo extends Activity implements SoundPool.OnLoadCompleteListe
         return result;
     }
 
-    //gets the settings stated by the user in activity_tempo_settings and returns a String with them
-    private String getSettings() {
+    //sets the settings stated by the user in activity_tempo_settings
+    private void setSettings() {
         tempo = Integer.parseInt(getIntent().getStringExtra("tempo"));
         meter = Integer.parseInt(getIntent().getStringExtra("meter"));
         duration = Integer.parseInt(getIntent().getStringExtra("duration"));
         loud = Integer.parseInt(getIntent().getStringExtra("loud"));
         silent = Integer.parseInt(getIntent().getStringExtra("silent"));
+    }
 
+    //Returns a String with the values por the textSettings TextView
+    private String getSettingsText(){
         String s = getText(R.string.tempo) + "  " + tempo;
         s += "\n" + getText(R.string.meter) + "  " + meter;
         s += "\n" + getText(R.string.text_duration) + " " + duration;
