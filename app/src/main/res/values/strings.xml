@@ -15,4 +15,9 @@
     <string name="again">Try again</string>
     <string name="show_score">Show score table</string>
     <string name="new_exercise">New exercise</string>
+    <string name="clear_title">Erase everything</string>
+    <string name="clear">Do you really want to erase all the scores?</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="press_start">Press start!</string>
 </resources>

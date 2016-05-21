@@ -21,12 +21,20 @@ public class EndOfExercise extends AppCompatActivity {
     }
 
     public void repeat(View view){
-        //Así no vale, porque depende de TempoSettings
         finish();
     }
 
+    public void saveScore(View view){
+
+        //save score
+        Intent intentSave = new Intent(this, SaveScore.class);
+        startActivityForResult(intentSave, 0);
+        //return true;
+    }
+
     public void showScore(View view){
-      //TODO
+        Intent intent = new Intent(getApplicationContext(), ScoreBoard.class);
+        startActivity(intent);
     }
 
     public void newExercise(View view){

@@ -18,12 +18,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PlayTempo"
+            android:name=".PlayTempoActivity"
             android:label="@string/title_activity_play_tempo"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EndOfExercise"
-            android:label="@string/title_activity_end_of_exercise"/>
+            android:label="@string/title_activity_end_of_exercise" />
+        <activity android:name=".ScoreBoard" />
+        <activity android:name=".SaveScore"></activity>
     </application>
 
 </manifest>
