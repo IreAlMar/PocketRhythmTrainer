@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class TempoSettings extends Activity {
+public class TempoSettingsActivity extends Activity {
 
     public static final String STATE_TEMPO = "tempo";
     public static final String STATE_METER = "meter";
@@ -20,9 +20,9 @@ public class TempoSettings extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tempo_settings);
         Button buttonPlay = (Button) findViewById(R.id.buttonPlay);
-        buttonPlay.setOnClickListener(new View.OnClickListener(){
+        buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 EditText editTextTempo = (EditText) findViewById(R.id.value_tempo);
                 EditText editTextMeter = (EditText) findViewById(R.id.value_meter);
                 EditText editTextDuration = (EditText) findViewById(R.id.value_duration);

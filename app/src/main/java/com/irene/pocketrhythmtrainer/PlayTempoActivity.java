@@ -11,10 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,8 +34,6 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
     private int length; //length of the arrays storing the time moments of the tapping and the click in silent periods
     private int timeIntervalBetweenBits;
 
-    private List<TimeSlot> slots;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +42,6 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         TextView textSettings = (TextView) findViewById(R.id.text_tempo);
         Button buttonTap = (Button) findViewById(R.id.buttonTap);
         buttonStart = (Button) findViewById(R.id.buttonStart);
-
-        slots = new ArrayList<>();
 
         durationCounter = 0;
         running = false;
@@ -101,7 +93,6 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
                         public void run() {
                             if (durationCounter >= duration) {
                                 stop(scheduler);
-                                //Calculate score and show end of exercise screen
                                 endOfExercise(calculateScore());
                                 //Save the score in the database
                                 //TODO Lanzar dialog en la que se pregunta el nombre
@@ -157,21 +148,21 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putInt(TempoSettings.STATE_TEMPO, tempo);
-        savedInstanceState.putInt(TempoSettings.STATE_METER, meter);
-        savedInstanceState.putInt(TempoSettings.STATE_DURATION, duration);
-        savedInstanceState.putInt(TempoSettings.STATE_LOUD, loud);
-        savedInstanceState.putInt(TempoSettings.STATE_SILENT, silent);
+        savedInstanceState.putInt(TempoSettingsActivity.STATE_TEMPO, tempo);
+        savedInstanceState.putInt(TempoSettingsActivity.STATE_METER, meter);
+        savedInstanceState.putInt(TempoSettingsActivity.STATE_DURATION, duration);
+        savedInstanceState.putInt(TempoSettingsActivity.STATE_LOUD, loud);
+        savedInstanceState.putInt(TempoSettingsActivity.STATE_SILENT, silent);
         super.onSaveInstanceState(savedInstanceState);
     }
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        tempo = savedInstanceState.getInt(TempoSettings.STATE_TEMPO);
-        meter = savedInstanceState.getInt(TempoSettings.STATE_METER);
-        duration = savedInstanceState.getInt(TempoSettings.STATE_DURATION);
-        loud = savedInstanceState.getInt(TempoSettings.STATE_LOUD);
-        silent = savedInstanceState.getInt(TempoSettings.STATE_SILENT);
+        tempo = savedInstanceState.getInt(TempoSettingsActivity.STATE_TEMPO);
+        meter = savedInstanceState.getInt(TempoSettingsActivity.STATE_METER);
+        duration = savedInstanceState.getInt(TempoSettingsActivity.STATE_DURATION);
+        loud = savedInstanceState.getInt(TempoSettingsActivity.STATE_LOUD);
+        silent = savedInstanceState.getInt(TempoSettingsActivity.STATE_SILENT);
     }
     /*@Override
     protected void onStop() {
@@ -186,10 +177,10 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         super.onStop();
     }*/
 
-    //Starts the EndOfExercise activity.
+    //Starts the EndOfExerciseActivity activity.
     private void endOfExercise(long score) {
         //show end of exercise options
-        Intent intent = new Intent(getApplicationContext(), EndOfExercise.class);
+        Intent intent = new Intent(getApplicationContext(), EndOfExerciseActivity.class);
         intent.putExtra("score", Long.toString(score));
         startActivity(intent);
     }
@@ -208,11 +199,11 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
 
     //sets the settings stated by the user in activity_tempo_settings
     private void setSettings() {
-        tempo = Integer.parseInt(getIntent().getStringExtra(TempoSettings.STATE_TEMPO));
-        meter = Integer.parseInt(getIntent().getStringExtra(TempoSettings.STATE_METER));
-        duration = Integer.parseInt(getIntent().getStringExtra(TempoSettings.STATE_DURATION));
-        loud = Integer.parseInt(getIntent().getStringExtra(TempoSettings.STATE_LOUD));
-        silent = Integer.parseInt(getIntent().getStringExtra(TempoSettings.STATE_SILENT));
+        tempo = Integer.parseInt(getIntent().getStringExtra(TempoSettingsActivity.STATE_TEMPO));
+        meter = Integer.parseInt(getIntent().getStringExtra(TempoSettingsActivity.STATE_METER));
+        duration = Integer.parseInt(getIntent().getStringExtra(TempoSettingsActivity.STATE_DURATION));
+        loud = Integer.parseInt(getIntent().getStringExtra(TempoSettingsActivity.STATE_LOUD));
+        silent = Integer.parseInt(getIntent().getStringExtra(TempoSettingsActivity.STATE_SILENT));
     }
 
     //Returns a String with the values por the textSettings TextView

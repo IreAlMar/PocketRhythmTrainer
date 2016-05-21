@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".TempoSettings"
+            android:name=".TempoSettingsActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,10 +22,8 @@
             android:label="@string/title_activity_play_tempo"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".EndOfExercise"
+            android:name=".EndOfExerciseActivity"
             android:label="@string/title_activity_end_of_exercise" />
-        <activity android:name=".ScoreBoard" />
-        <activity android:name=".SaveScore"></activity>
     </application>
 
 </manifest>
