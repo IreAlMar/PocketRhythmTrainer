@@ -21,5 +21,8 @@
     <string name="ok">OK</string>
     <string name="press_start">Press start!</string>
     <string name="save_title">Save score</string>
-    <string name="save">Do you want to save this round?</string>
+    <string name="save_message">Do you want to save this round?</string>
+    <string name="title_activity_save_round">SaveRoundActivity</string>
+    <string name="calcel">Cancel</string>
+    <string name="empty_field">Emty field.</string>
 </resources>

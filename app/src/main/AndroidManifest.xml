@@ -3,6 +3,7 @@
     package="com.irene.pocketrhythmtrainer">
 
     <application
+        android:name=".Trainer"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,6 +25,9 @@
         <activity
             android:name=".EndOfExerciseActivity"
             android:label="@string/title_activity_end_of_exercise" />
+        <activity
+            android:name=".SaveRoundActivity"
+            android:label="@string/title_activity_save_round"/>
     </application>
 
 </manifest>

@@ -1,9 +1,6 @@
 package com.irene.pocketrhythmtrainer;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
@@ -20,7 +17,6 @@ import java.util.TimerTask;
 public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompleteListener {
     private static final String TAG = PlayTempoActivity.class.getSimpleName();
     private static final String GAME_NAME = "play_tempo";
-    private static Context context;
 
     private Button buttonStart; //starts the exercise
     private SoundPool clickSoundPool; // class that loads the sound clips into a device’s memory
@@ -43,8 +39,6 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_tempo);
-
-        context = getApplicationContext();
 
         TextView textSettings = (TextView) findViewById(R.id.text_tempo);
         Button buttonTap = (Button) findViewById(R.id.buttonTap);
@@ -91,8 +85,7 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
                     silentClickCounter = -1;
                     buttonStart.setText(R.string.stop);
                     scheduler = new Timer();
-                    //task1 is responsible of the strong beat, it also controls playing and muting the click
-                    TimerTask task1 = new TimerTask() {
+                    TimerTask barsClick = new TimerTask() {
                         int loudCounter = 0; //counts the number of loud bars for each cycle
                         int silentBarsCounter = 1; //counts the number of silent bars for each cycle
 
@@ -100,7 +93,7 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
                         public void run() {
                             if (durationCounter >= duration) {
                                 stopClick(scheduler);
-                                //Save the score in the database
+                                dbSaveScore(calculateScore());
                                 //TODO Lanzar dialog en la que se pregunta el nombre
                                 //y se guardan los puntos
                             } else {
@@ -121,8 +114,7 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
                             }
                         }
                     };
-                    //task2 plays is responsible of the weak beat
-                    TimerTask task2 = new TimerTask() {
+                    TimerTask beatClick = new TimerTask() {
                         @Override
                         public void run() {
                             if (play) {
@@ -136,8 +128,8 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
                     };
                     timeIntervalBetweenBits = 1000 * 60 / tempo;
                     timeIntervalBetweenBars = meter * timeIntervalBetweenBits;
-                    scheduler.scheduleAtFixedRate(task1, 1000, timeIntervalBetweenBars);
-                    scheduler.scheduleAtFixedRate(task2, 1000, timeIntervalBetweenBits);
+                    scheduler.scheduleAtFixedRate(barsClick, 1000, timeIntervalBetweenBars);
+                    scheduler.scheduleAtFixedRate(beatClick, 1000, timeIntervalBetweenBits);
                 } else {
                     stopClick(scheduler);
                     dbSaveScore(calculateScore());
@@ -146,34 +138,16 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         });
     }
 
+    /*private void saveScoreDialog(){
+        DialogFragment dialog = new SaveRoundDialogFragment();
+        dialog.show(getSupportFragmentManager(), "saveScore");
+    }*/
+
     private void dbSaveScore(final long score) {
-
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        final Round round = new Round();
-
-        dialog.setTitle(R.string.save_title);
-        dialog.setMessage(R.string.save);
-
-        dialog.setPositiveButton(android.R.string.ok,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        round.setId(1);
-                        round.setNameG(GAME_NAME);
-                        round.setScore(score);
-                        round.setNameP("Paco");
-                        round.save(round);
-                    }
-                });
-        dialog.setNegativeButton(android.R.string.cancel,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //No hace nada
-                    }
-                });
-        AlertDialog alertDialog = dialog.create();
-        alertDialog.show();
+        Intent intent = new Intent(getApplicationContext(), SaveRoundActivity.class);
+        intent.putExtra(SaveRoundActivity.SCORE, Long.toString(score));
+        intent.putExtra(SaveRoundActivity.GAME, GAME_NAME);
+        startActivity(intent);
     }
 
     @Override
@@ -213,14 +187,6 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         editor.apply();
         super.onStop();
     }*/
-
-    //Starts the EndOfExerciseActivity activity.
-    private void endOfExercise(long score) {
-
-        Intent intent = new Intent(getApplicationContext(), EndOfExerciseActivity.class);
-        intent.putExtra("score", Long.toString(score));
-        startActivity(intent);
-    }
 
     //Calculates the length for the arrays containing the time instants
     private int calculateLength() {
@@ -323,4 +289,6 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
             }
         }
     }
+
+
 }

@@ -43,7 +43,7 @@ public class Round implements Comparable<Round>{
         return new String[]{COL_ID, COL_PLAYER, COL_GAME, COL_POINTS};
     }
 
-    public Round(){}
+    private Round(){}
 
     private static Round roundFromCursor(Cursor cursor){
         Round round = new Round();
@@ -83,16 +83,15 @@ public class Round implements Comparable<Round>{
         return rounds;
     }
 
-    public static void save(Round round){
+    public void save(){
         SQLiteDatabase db = Trainer.getDatabaseInstance();
         db.beginTransaction();
 
         try{
             ContentValues values = new ContentValues();
-            values.put(COL_PLAYER, round.getNameP());
-            values.put(COL_GAME, round.getNameG());
-            values.put(COL_POINTS, round.getScore());
-            values.put(COL_ID, round.getId()); //TODO Como sabes si el indice está ya asignado?
+            values.put(COL_PLAYER, this.getNameP());
+            values.put(COL_GAME, this.getNameG());
+            values.put(COL_POINTS, this.getScore());
             db.insert(TABLE_NAME, null, values);
             db.setTransactionSuccessful();
         }finally {
@@ -120,15 +119,9 @@ public class Round implements Comparable<Round>{
         this.id = id;
     }
 
-    public void setNameP(String nameP) {
+    public Round(String nameP, String nameG, Long score){
         this.nameP = nameP;
-    }
-
-    public void setNameG(String nameG) {
         this.nameG = nameG;
-    }
-
-    public void setScore(Long score) {
         this.score = score;
     }
 
