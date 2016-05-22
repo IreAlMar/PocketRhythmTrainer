@@ -20,4 +20,6 @@
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="press_start">Press start!</string>
+    <string name="save_title">Save score</string>
+    <string name="save">Do you want to save this round?</string>
 </resources>

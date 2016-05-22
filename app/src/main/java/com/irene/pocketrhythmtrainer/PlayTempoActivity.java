@@ -1,6 +1,9 @@
 package com.irene.pocketrhythmtrainer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
@@ -16,6 +19,8 @@ import java.util.TimerTask;
 
 public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompleteListener {
     private static final String TAG = PlayTempoActivity.class.getSimpleName();
+    private static final String GAME_NAME = "play_tempo";
+    private static Context context;
 
     private Button buttonStart; //starts the exercise
     private SoundPool clickSoundPool; // class that loads the sound clips into a device’s memory
@@ -38,6 +43,8 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_tempo);
+
+        context = getApplicationContext();
 
         TextView textSettings = (TextView) findViewById(R.id.text_tempo);
         Button buttonTap = (Button) findViewById(R.id.buttonTap);
@@ -92,8 +99,7 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
                         @Override
                         public void run() {
                             if (durationCounter >= duration) {
-                                stop(scheduler);
-                                endOfExercise(calculateScore());
+                                stopClick(scheduler);
                                 //Save the score in the database
                                 //TODO Lanzar dialog en la que se pregunta el nombre
                                 //y se guardan los puntos
@@ -133,16 +139,47 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
                     scheduler.scheduleAtFixedRate(task1, 1000, timeIntervalBetweenBars);
                     scheduler.scheduleAtFixedRate(task2, 1000, timeIntervalBetweenBits);
                 } else {
-                    stop(scheduler);
+                    stopClick(scheduler);
+                    dbSaveScore(calculateScore());
                 }
             }
         });
     }
 
+    private void dbSaveScore(final long score) {
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        final Round round = new Round();
+
+        dialog.setTitle(R.string.save_title);
+        dialog.setMessage(R.string.save);
+
+        dialog.setPositiveButton(android.R.string.ok,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        round.setId(1);
+                        round.setNameG(GAME_NAME);
+                        round.setScore(score);
+                        round.setNameP("Paco");
+                        round.save(round);
+                    }
+                });
+        dialog.setNegativeButton(android.R.string.cancel,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //No hace nada
+                    }
+                });
+        AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
+    }
+
     @Override
     public void onBackPressed() {
         Log.d(TAG, "Back pressed");
-        stop(scheduler);
+        stopClick(scheduler);
         super.onBackPressed();
     }
 
@@ -179,7 +216,7 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
 
     //Starts the EndOfExerciseActivity activity.
     private void endOfExercise(long score) {
-        //show end of exercise options
+
         Intent intent = new Intent(getApplicationContext(), EndOfExerciseActivity.class);
         intent.putExtra("score", Long.toString(score));
         startActivity(intent);
@@ -217,7 +254,7 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
     }
 
     //stops the scheduler and  sets the control variables to the start values
-    public void stop(Timer scheduler) {
+    public void stopClick(Timer scheduler) {
         scheduler.cancel();
         scheduler.purge();
         running = false;
