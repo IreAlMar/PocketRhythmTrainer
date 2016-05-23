@@ -9,6 +9,7 @@
     <string name="text_silent">Number of silent bars</string>
     <string name="title_activity_play_tempo">Play Tempo</string>
     <string name="title_activity_end_of_exercise">End of exercise</string>
+    <string name="title_activity_save_round">Save round</string>
     <string name="tap">TAP</string>
     <string name="start">START</string>
     <string name="stop">STOP</string>
@@ -22,7 +23,6 @@
     <string name="press_start">Press start!</string>
     <string name="save_title">Save score</string>
     <string name="save_message">Do you want to save this round?</string>
-    <string name="title_activity_save_round">SaveRoundActivity</string>
-    <string name="calcel">Cancel</string>
     <string name="empty_field">Emty field.</string>
+    <string name="your_name_here">Your name here</string>
 </resources>

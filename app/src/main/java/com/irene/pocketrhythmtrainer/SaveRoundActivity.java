@@ -1,15 +1,15 @@
 package com.irene.pocketrhythmtrainer;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SaveRoundActivity extends AppCompatActivity {
+public class SaveRoundActivity extends Activity {
     private static final String TAG = SaveRoundActivity.class.getSimpleName();
     public static final String SCORE = "score";
     public static final String GAME = "nameG";
@@ -30,7 +30,7 @@ public class SaveRoundActivity extends AppCompatActivity {
         score = Long.parseLong(getIntent().getStringExtra(SCORE));
         game = getIntent().getStringExtra(GAME);
 
-        textSave.setText("Your score is  " + score +"% \n" + getText(R.string.save_message));
+        textSave.setText(String.format("Your score is  %d%% \n%s", score, getText(R.string.save_message)));
     }
 
     public void save(View view){

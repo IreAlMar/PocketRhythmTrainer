@@ -138,11 +138,6 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         });
     }
 
-    /*private void saveScoreDialog(){
-        DialogFragment dialog = new SaveRoundDialogFragment();
-        dialog.show(getSupportFragmentManager(), "saveScore");
-    }*/
-
     private void dbSaveScore(final long score) {
         Intent intent = new Intent(getApplicationContext(), SaveRoundActivity.class);
         intent.putExtra(SaveRoundActivity.SCORE, Long.toString(score));

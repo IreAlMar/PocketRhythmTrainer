@@ -20,14 +20,14 @@
         </activity>
         <activity
             android:name=".PlayTempoActivity"
-            android:label="@string/title_activity_play_tempo"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_play_tempo"/>
         <activity
             android:name=".EndOfExerciseActivity"
             android:label="@string/title_activity_end_of_exercise" />
         <activity
             android:name=".SaveRoundActivity"
-            android:label="@string/title_activity_save_round"/>
+            android:label="@string/title_activity_save_round"
+            android:theme="@android:style/Theme.Dialog" />
     </application>
 
 </manifest>

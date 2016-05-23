@@ -5,20 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".PlayTempoActivity">
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/play_tempo_title"
+        android:text="@string/title_activity_play_tempo"
+        android:textSize="@dimen/font_size_element"
+        android:textColor="#FFFFFF"
+        android:padding="@dimen/margin_element"
+        android:background="@color/colorPrimary"/>
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_element"
+        android:layout_below="@+id/play_tempo_title"
+        android:layout_centerInParent="true"
         android:id="@+id/text_tempo"
         android:textSize="@dimen/font_size_element"
-        android:layout_margin="@dimen/margin_element"
-        android:layout_column="0"
-        android:layout_weight="1"/>
+        android:padding="@dimen/margin_element"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

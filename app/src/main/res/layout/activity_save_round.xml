@@ -8,36 +8,39 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorPrimary"
     tools:context="com.irene.pocketrhythmtrainer.SaveRoundActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/font_size_title"
-        android:layout_centerHorizontal="true"
-        android:text="@string/save_title"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/text_save"
         android:textSize="@dimen/font_size_element"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:padding="@dimen/margin_element"/>
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/font_size_element"
         android:id="@+id/player_name"
-        android:hint="Your name here"/>
-    <Button
-        android:layout_width="wrap_content"
+        android:hint="@string/your_name_here"/>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/calcel"
-        android:onClick="cancel"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save_title"
-        android:onClick="save"/>
-
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_element">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:textSize="@dimen/font_size_element"
+            android:onClick="cancel"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save_title"
+            android:textSize="@dimen/font_size_element"
+            android:onClick="save"
+            android:layout_weight="1"/>
+    </LinearLayout>
 </LinearLayout>
