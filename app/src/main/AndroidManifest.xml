@@ -20,7 +20,7 @@
         </activity>
         <activity
             android:name=".PlayTempoActivity"
-            android:label="@string/title_activity_play_tempo"/>
+            android:label="@string/title_activity_play_tempo" />
         <activity
             android:name=".EndOfExerciseActivity"
             android:label="@string/title_activity_end_of_exercise" />
@@ -28,6 +28,10 @@
             android:name=".SaveRoundActivity"
             android:label="@string/title_activity_save_round"
             android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".ShowScoresActivity"
+            android:label="@string/title_activity_show_scores"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

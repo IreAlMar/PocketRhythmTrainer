@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,7 +44,7 @@ public class Round implements Comparable<Round>{
         return new String[]{COL_ID, COL_PLAYER, COL_GAME, COL_POINTS};
     }
 
-    private Round(){}
+    public Round(){}
 
     private static Round roundFromCursor(Cursor cursor){
         Round round = new Round();
@@ -54,19 +55,19 @@ public class Round implements Comparable<Round>{
         return round;
     }
 
-    public static List<Round> listAll(){
+    public static ArrayList<Round> listAll(){
         return Round.queryAll("");
     }
 
-    public static List<Round> queryAll(String query){
+    public static ArrayList<Round> queryAll(String query){
         Log.d(TAG, "qAll");
         return Round.query(query);
     }
 
-    public static List<Round> query(String query){
+    public static ArrayList<Round> query(String query){
         Log.d(TAG, "QUERY=" +query);
         SQLiteDatabase db = Trainer.getDatabaseInstance();
-        List<Round> rounds = new ArrayList<>();
+        ArrayList<Round> rounds = new ArrayList<>();
         String whereClause = "("+COL_PLAYER + " LIKE '%"+query+"%' OR "; //TODO Adaptar a lo necesario
         whereClause += COL_GAME+ " LIKE '%"+query+"%')";
 
@@ -97,6 +98,20 @@ public class Round implements Comparable<Round>{
         }finally {
             db.endTransaction();
         }
+    }
+
+    public void deleteAll() {
+        Log.d(TAG, "DELETE ALL");
+        SQLiteDatabase db = Trainer.getDatabaseInstance();
+        db.delete(TABLE_NAME, null, null);
+    }
+
+    public static int delete(long id){
+        Log.d(TAG, "DELETE ROUND N " + id);
+        String whereClause = COL_ID + "= ?";
+        String[] whereArgs = { String.valueOf(id)};
+        SQLiteDatabase db = Trainer.getDatabaseInstance();
+        return db.delete(TABLE_NAME, whereClause, whereArgs);
     }
 
     public int getId() {

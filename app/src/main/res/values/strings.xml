@@ -25,4 +25,7 @@
     <string name="save_message">Do you want to save this round?</string>
     <string name="empty_field">Emty field.</string>
     <string name="your_name_here">Your name here</string>
+    <string name="title_activity_show_scores">ShowScoresActivity</string>
+    <string name="empty">There are no players in the score list.</string>
+    <string name="delete_item">Delete round</string>
 </resources>

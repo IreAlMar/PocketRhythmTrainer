@@ -16,7 +16,7 @@ import java.util.TimerTask;
 
 public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompleteListener {
     private static final String TAG = PlayTempoActivity.class.getSimpleName();
-    private static final String GAME_NAME = "play_tempo";
+    private static final String GAME_NAME = "Play tempo";
 
     private Button buttonStart; //starts the exercise
     private SoundPool clickSoundPool; // class that loads the sound clips into a device’s memory

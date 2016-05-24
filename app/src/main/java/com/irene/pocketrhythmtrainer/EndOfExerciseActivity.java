@@ -22,7 +22,8 @@ public class EndOfExerciseActivity extends AppCompatActivity {
     }
 
     public void showScore(View view) {
-        //TODO Show score
+        Intent intent = new Intent(getApplicationContext(), ShowScoresActivity.class);
+        startActivity(intent);
     }
 
     public void newExercise(View view) {
