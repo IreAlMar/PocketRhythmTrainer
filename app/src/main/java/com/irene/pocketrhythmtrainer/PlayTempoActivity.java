@@ -19,25 +19,25 @@ import java.util.TimerTask;
 public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompleteListener {
     private static final String TAG = PlayTempoActivity.class.getSimpleName();
     private static final String GAME_NAME = "Play tempo";
+    private static final String PREFS_NAME = "PREFS";
 
-    private Button buttonStart; //starts the exercise
-    private SoundPool clickSoundPool; // class that loads the sound clips into a device’s memory
-    private int tempo; //tempo stated by the user
-    private int meter; //meter stated by the user number of clicks per bar
-    private int duration; //duration stated by the user
-    private int loud; //loud bars stated by the user
-    private int silent; //silent bars stated by the user
-    private int durationCounter; //counts the bars already played
-    private int silentClickCounter; //counts the beats in silent bars time
-    private boolean running; //true if the exercise is running and false if it is not
-    private boolean play; //true for loud bars time and false for silent bars time
-    private long[] clickTimes; //saves the time in milliseconds of each click for the silent bars time
-    private long[] tappingTimes; //saves the time in milliseconds of each user tap for the silent bars time
-    private Timer scheduler; //schedules the sounds playing tasks for execution in background threads
+    private Button buttonStart;
+    private SoundPool clickSoundPool;
+    private int tempo;
+    private int meter;
+    private int duration;
+    private int loud;
+    private int silent;
+    private int durationCounter;
+    private int silentClickCounter;
+    private boolean running;
+    private boolean play;
+    private long[] clickTimes;
+    private long[] tappingTimes;
+    private Timer scheduler;
     private int length; //length of the arrays storing the time moments of the tapping and the click in silent periods
     private int timeIntervalBetweenBits;
     private SharedPreferences prefs;
-    private static String PREFS_NAME = "PREFS";
     public String isFirstRound;
 
     @Override
@@ -53,7 +53,6 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         running = false;
         play = true;
         prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-
 
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);

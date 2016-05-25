@@ -18,8 +18,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void repeat(View view) {
-        Intent intent = new Intent(getApplicationContext(), PlayTempoActivity.class);
-        startActivity(intent);
+        finish();
+        /*Intent intent = new Intent(getApplicationContext(), PlayTempoActivity.class);
+        startActivity(intent);*/
     }
 
     public void showScore(View view) {
