@@ -5,5 +5,6 @@
     <dimen name="font_size_title">25sp</dimen>
     <dimen name="font_size_element">20sp</dimen>
     <dimen name="margin_element">10dp</dimen>
+    <dimen name="margin_big">20dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 </resources>

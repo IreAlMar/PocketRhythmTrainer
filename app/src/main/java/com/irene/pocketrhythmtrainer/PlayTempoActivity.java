@@ -1,7 +1,9 @@
 package com.irene.pocketrhythmtrainer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -34,6 +36,9 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
     private Timer scheduler; //schedules the sounds playing tasks for execution in background threads
     private int length; //length of the arrays storing the time moments of the tapping and the click in silent periods
     private int timeIntervalBetweenBits;
+    private SharedPreferences prefs;
+    private static String PREFS_NAME = "PREFS";
+    public String isFirstRound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +52,15 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         durationCounter = 0;
         running = false;
         play = true;
+        prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+
 
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         } else {
             setSettings();
         }
+
         textSettings.setText(getSettingsText());
 
         createNewSoundPool();
@@ -94,8 +102,6 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
                             if (durationCounter >= duration) {
                                 stopClick(scheduler);
                                 dbSaveScore(calculateScore());
-                                //TODO Lanzar dialog en la que se pregunta el nombre
-                                //y se guardan los puntos
                             } else {
                                 if (loudCounter < loud) {
                                     clickSoundPool.play(click1Id, 1, 1, 1, 0, 1);
@@ -159,6 +165,7 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         savedInstanceState.putInt(TempoSettingsActivity.STATE_DURATION, duration);
         savedInstanceState.putInt(TempoSettingsActivity.STATE_LOUD, loud);
         savedInstanceState.putInt(TempoSettingsActivity.STATE_SILENT, silent);
+        savedInstanceState.putString(TempoSettingsActivity.STATE_ISFIRST, isFirstRound);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -169,19 +176,20 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         duration = savedInstanceState.getInt(TempoSettingsActivity.STATE_DURATION);
         loud = savedInstanceState.getInt(TempoSettingsActivity.STATE_LOUD);
         silent = savedInstanceState.getInt(TempoSettingsActivity.STATE_SILENT);
+        isFirstRound = savedInstanceState.getString(TempoSettingsActivity.STATE_ISFIRST);
     }
-    /*@Override
+    @Override
     protected void onStop() {
-    //Parar sonido
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("tempo", Integer.toString(tempo));
         editor.putString("meter", Integer.toString(meter));
         editor.putString("duration", Integer.toString(duration));
         editor.putString("loud", Integer.toString(loud));
         editor.putString("silent", Integer.toString(silent));
+        editor.putString("isFirst", "NO");
         editor.apply();
         super.onStop();
-    }*/
+    }
 
     //Calculates the length for the arrays containing the time instants
     private int calculateLength() {

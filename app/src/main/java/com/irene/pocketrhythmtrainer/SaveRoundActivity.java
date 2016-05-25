@@ -52,7 +52,7 @@ public class SaveRoundActivity extends Activity {
     }
 
     private void showEndOfExercise(){
-        Intent intent = new Intent(getApplicationContext(), EndOfExerciseActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         finish();
     }

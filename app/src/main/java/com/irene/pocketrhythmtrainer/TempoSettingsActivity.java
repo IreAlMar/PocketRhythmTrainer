@@ -14,6 +14,7 @@ public class TempoSettingsActivity extends Activity {
     public static final String STATE_DURATION = "duration";
     public static final String STATE_LOUD = "loud";
     public static final String STATE_SILENT = "silent";
+    public static final String STATE_ISFIRST = "isFirst";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

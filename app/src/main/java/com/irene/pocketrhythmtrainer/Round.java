@@ -8,7 +8,9 @@ import android.util.Log;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Irene on 21/05/2016.
@@ -55,13 +57,9 @@ public class Round implements Comparable<Round>{
         return round;
     }
 
-    public static ArrayList<Round> listAll(){
-        return Round.queryAll("");
-    }
-
-    public static ArrayList<Round> queryAll(String query){
+    public static ArrayList<Round> queryAll(){
         Log.d(TAG, "qAll");
-        return Round.query(query);
+        return Round.query("");
     }
 
     public static ArrayList<Round> query(String query){
@@ -84,6 +82,37 @@ public class Round implements Comparable<Round>{
         return rounds;
     }
 
+    public static ArrayList<Round> selectOrderedByPlayer() {
+        Log.d(TAG, "QUERY selectOrderedByPlayer");
+        String query = "";
+
+        SQLiteDatabase db = Trainer.getDatabaseInstance();
+        ArrayList<Round> rounds = new ArrayList<>();
+        String whereClause = "("+COL_PLAYER + " LIKE '%"+query+"%' OR ";
+        whereClause += COL_GAME+ " LIKE '%"+query+"%')";
+
+        String orderBy = COL_ID;
+        Cursor cursor = db.query(TABLE_NAME, allColumns(), whereClause, null, null, null, orderBy);
+
+        while(cursor.moveToNext()){
+            Round round = roundFromCursor(cursor);
+            Iterator<Round> ite = rounds.iterator();
+            while (ite.hasNext()) {
+                Round aux = ite.next();
+                if (Objects.equals(round.getNameP(), aux.getNameP())){
+                    round.setScore(aux.getScore()+round.getScore());
+                    ite.remove();
+                }
+            }
+            rounds.add(round);
+            Log.d(TAG, "queringRounds=" + round.toString());
+        }
+
+        Collections.sort(rounds);
+        return rounds;
+    }
+
+
     public void save(){
         SQLiteDatabase db = Trainer.getDatabaseInstance();
         db.beginTransaction();
@@ -100,7 +129,28 @@ public class Round implements Comparable<Round>{
         }
     }
 
-    public void deleteAll() {
+    public static ArrayList<Round> selectOrderedByRound() {
+        String query = "";
+        Log.d(TAG, "QUERY=" +query);
+        SQLiteDatabase db = Trainer.getDatabaseInstance();
+        ArrayList<Round> rounds = new ArrayList<>();
+        String whereClause = "("+COL_PLAYER + " LIKE '%"+query+"%' OR ";
+        whereClause += COL_GAME+ " LIKE '%"+query+"%')";
+
+        String orderBy = String.format("%s DESC, %s ASC", COL_POINTS, COL_PLAYER);
+        Cursor cursor = db.query(TABLE_NAME, allColumns(), whereClause, null, null, null, orderBy);
+
+        while(cursor.moveToNext()){
+            Round round = roundFromCursor(cursor);
+            rounds.add(round);
+            Log.d(TAG, "queringRounds=" + round.toString());
+        }
+
+        Collections.sort(rounds);
+        return rounds;
+    }
+
+    public static void deleteAll() {
         Log.d(TAG, "DELETE ALL");
         SQLiteDatabase db = Trainer.getDatabaseInstance();
         db.delete(TABLE_NAME, null, null);
@@ -133,6 +183,8 @@ public class Round implements Comparable<Round>{
     public void setId(int id) {
         this.id = id;
     }
+
+    public void setScore(Long score) { this.score = score; }
 
     public Round(String nameP, String nameG, Long score){
         this.nameP = nameP;

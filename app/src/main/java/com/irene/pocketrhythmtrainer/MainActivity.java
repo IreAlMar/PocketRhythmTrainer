@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class EndOfExerciseActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     private TextView textEndOfExercise;
 
     @Override
@@ -14,11 +14,12 @@ public class EndOfExerciseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_of_exercise);
         textEndOfExercise = (TextView) findViewById(R.id.text_score);
-        textEndOfExercise.setText("End of exercise!\n" + "Your score is: " + getIntent().getStringExtra("score") + "\n");
+        textEndOfExercise.setText(R.string.text_intro);
     }
 
     public void repeat(View view) {
-        finish();
+        Intent intent = new Intent(getApplicationContext(), PlayTempoActivity.class);
+        startActivity(intent);
     }
 
     public void showScore(View view) {

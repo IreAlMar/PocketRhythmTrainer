@@ -13,7 +13,7 @@
     <string name="tap">TAP</string>
     <string name="start">START</string>
     <string name="stop">STOP</string>
-    <string name="again">Try again</string>
+    <string name="again">Try last exercise again</string>
     <string name="show_score">Show score table</string>
     <string name="new_exercise">New exercise</string>
     <string name="clear_title">Erase everything</string>
@@ -28,4 +28,10 @@
     <string name="title_activity_show_scores">ShowScoresActivity</string>
     <string name="empty">There are no players in the score list.</string>
     <string name="delete_item">Delete round</string>
+    <string name="menu_help">Help</string>
+    <string name="delete">Delete all</string>
+    <string name="help">Keep pressing to erase</string>
+    <string name="order_round">Order by round</string>
+    <string name="order_player">Order by player</string>
+    <string name="text_intro">This is Play Tempo exercise. \n ¿What do you want to do?</string>
 </resources>
