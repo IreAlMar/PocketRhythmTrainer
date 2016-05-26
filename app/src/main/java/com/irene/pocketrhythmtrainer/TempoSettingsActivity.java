@@ -1,6 +1,8 @@
 package com.irene.pocketrhythmtrainer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -40,4 +42,22 @@ public class TempoSettingsActivity extends Activity {
             }
         });
     }
+    public void showHelp(View view){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+        dialog.setTitle(R.string.help);
+        dialog.setMessage(R.string.how_tempo_trainer);
+
+        dialog.setNegativeButton(R.string.close,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Close dialog
+                    }
+                });
+        AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
+
+    }
+
 }

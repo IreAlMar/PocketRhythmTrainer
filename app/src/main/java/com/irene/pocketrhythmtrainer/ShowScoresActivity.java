@@ -1,6 +1,5 @@
 package com.irene.pocketrhythmtrainer;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -15,8 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -44,7 +41,7 @@ public class ShowScoresActivity extends AppCompatActivity {
             arrayOfRounds = Round.selectOrderedByPlayer();
         if (arrayOfRounds.isEmpty()){
             TextView textEmpty = (TextView) findViewById(R.id.empty);
-            textEmpty.setText(R.string.empty);
+            textEmpty.setText(R.string.empty_score_board);
         }
         roundsAdapter = new RoundsAdapter(this, arrayOfRounds);
         ListView listView = (ListView) findViewById(R.id.lv_scores);

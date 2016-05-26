@@ -142,7 +142,10 @@
         android:layout_height="wrap_content"
         android:text="@string/play"
         android:id="@+id/buttonPlay"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/margin_element"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/help"
+        android:onClick="showHelp"/>
 </TableLayout>

@@ -38,6 +38,7 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
     private int length; //length of the arrays storing the time moments of the tapping and the click in silent periods
     private int timeIntervalBetweenBits;
     private SharedPreferences prefs;
+    private  Button buttonTap;
     public String isFirstRound;
 
     @Override
@@ -46,7 +47,7 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         setContentView(R.layout.activity_play_tempo);
 
         TextView textSettings = (TextView) findViewById(R.id.text_tempo);
-        Button buttonTap = (Button) findViewById(R.id.buttonTap);
+        buttonTap = (Button) findViewById(R.id.buttonTap);
         buttonStart = (Button) findViewById(R.id.buttonStart);
 
         durationCounter = 0;
@@ -61,6 +62,7 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         }
 
         textSettings.setText(getSettingsText());
+        buttonTap.setVisibility(View.INVISIBLE);
 
         createNewSoundPool();
         final int click1Id = clickSoundPool.load(this, R.raw.beep08b, 1);
@@ -89,6 +91,7 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
                 int timeIntervalBetweenBars;
                 if (!running) {
                     running = true;
+                    buttonTap.setVisibility(View.VISIBLE);
                     silentClickCounter = -1;
                     buttonStart.setText(R.string.stop);
                     scheduler = new Timer();
@@ -226,6 +229,7 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         scheduler.cancel();
         scheduler.purge();
         running = false;
+        buttonTap.setVisibility(View.INVISIBLE);
         durationCounter = 0;
         //Only the original thread that created a view hierarchy can touch its views. So we need this change the buttonStart text
         runOnUiThread(new Runnable() {
@@ -291,6 +295,4 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
             }
         }
     }
-
-
 }

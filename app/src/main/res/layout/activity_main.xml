@@ -13,10 +13,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/text_score"
-        android:textSize="@dimen/font_size_title"
+        android:layout_gravity="center"
         android:padding="@dimen/margin_element"
-        android:layout_gravity="center"/>
+        android:textSize="@dimen/font_size_title"
+        android:text="@string/intro_tempo_trainer"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,4 +41,22 @@
         android:text="@string/new_exercise"
         android:id="@+id/buttonNewExercise"
         android:onClick="newExercise"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/margin_big"
+        android:text="@string/what_is_tempo_trainer"
+        android:id="@+id/buttonShowInfo"
+        android:onClick="showInfo"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/margin_element"
+        android:textSize="@dimen/font_size_element"
+        android:text="@string/info_tempo_trainer"
+        android:id="@+id/text_info_tempo_trainer"/>
+
+
 </LinearLayout>
