@@ -15,16 +15,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="@dimen/margin_element"
+        android:gravity="center"
         android:textSize="@dimen/font_size_title"
         android:text="@string/intro_tempo_trainer"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="@dimen/margin_big"
-        android:text="@string/again"
-        android:id="@+id/buttonAgain"
-        android:onClick="repeat"/>
+        android:text="@string/new_exercise"
+        android:id="@+id/buttonNewExercise"
+        android:onClick="newExercise"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,9 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="@dimen/margin_big"
-        android:text="@string/new_exercise"
-        android:id="@+id/buttonNewExercise"
-        android:onClick="newExercise"/>
+        android:text="@string/again"
+        android:id="@+id/buttonRepeatExercise"
+        android:onClick="repeat"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

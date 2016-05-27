@@ -5,18 +5,19 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class TempoSettingsActivity extends Activity {
+public class TempoSettingsActivity extends AppCompatActivity {
 
     public static final String STATE_TEMPO = "tempo";
     public static final String STATE_METER = "meter";
     public static final String STATE_DURATION = "duration";
     public static final String STATE_LOUD = "loud";
     public static final String STATE_SILENT = "silent";
-    public static final String STATE_ISFIRST = "isFirst";
+    public static final String STATE_ISFIRST = "isFirstRound";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,5 +60,4 @@ public class TempoSettingsActivity extends Activity {
         alertDialog.show();
 
     }
-
 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     private TextView textInfo;
     private Button buttonShowInfo;
+    private Button buttonRepeatExercise;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +19,16 @@ public class MainActivity extends AppCompatActivity {
 
         textInfo = (TextView) findViewById(R.id.text_info_tempo_trainer);
         buttonShowInfo = (Button) findViewById(R.id.buttonShowInfo);
+        buttonRepeatExercise = (Button) findViewById(R.id.buttonRepeatExercise);
 
         textInfo.setVisibility(View.INVISIBLE);
+        if(PlayTempoActivity.isFirstRound){
+            buttonRepeatExercise.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void repeat(View view) {
         finish();
-        /*Intent intent = new Intent(getApplicationContext(), PlayTempoActivity.class);
-        startActivity(intent);*/
     }
 
     public void showScore(View view) {

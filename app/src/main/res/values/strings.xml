@@ -5,6 +5,11 @@
     <string name="close">Close</string>
     <string name="clear_title">Erase everything</string>
     <string name="again">Try last exercise again</string>
+    <string name="default_tempo">120</string>
+    <string name="default_meter">3</string>
+    <string name="default_bars">20</string>
+    <string name="default_loud">2</string>
+    <string name="default_silent">1</string>
     <string name="delete">Delete all</string>
     <string name="delete_item">Delete round</string>
     <string name="empty_score_board">There are no players in the score list.</string>
@@ -36,7 +41,8 @@
     <string name="title_activity_end_of_exercise">End of exercise</string>
     <string name="title_activity_play_tempo">Play Tempo</string>
     <string name="title_activity_save_round">Save round</string>
-    <string name="title_activity_show_scores">ShowScoresActivity</string>
+    <string name="title_activity_show_scores">Board of scores</string>
+    <string name="title_activity_tempo_settings">New exercise</string>
     <string name="your_name_here">Your name here</string>
     <string name="what_is_tempo_trainer">What is Tempo trainer?</string>
 </resources>

@@ -39,7 +39,7 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
     private int timeIntervalBetweenBits;
     private SharedPreferences prefs;
     private  Button buttonTap;
-    public String isFirstRound;
+    public static boolean isFirstRound = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,7 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         durationCounter = 0;
         running = false;
         play = true;
+        isFirstRound = false;
         prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
         if (savedInstanceState != null) {
@@ -167,7 +168,6 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         savedInstanceState.putInt(TempoSettingsActivity.STATE_DURATION, duration);
         savedInstanceState.putInt(TempoSettingsActivity.STATE_LOUD, loud);
         savedInstanceState.putInt(TempoSettingsActivity.STATE_SILENT, silent);
-        savedInstanceState.putString(TempoSettingsActivity.STATE_ISFIRST, isFirstRound);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -178,7 +178,6 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         duration = savedInstanceState.getInt(TempoSettingsActivity.STATE_DURATION);
         loud = savedInstanceState.getInt(TempoSettingsActivity.STATE_LOUD);
         silent = savedInstanceState.getInt(TempoSettingsActivity.STATE_SILENT);
-        isFirstRound = savedInstanceState.getString(TempoSettingsActivity.STATE_ISFIRST);
     }
     @Override
     protected void onStop() {
@@ -188,7 +187,6 @@ public class PlayTempoActivity extends Activity implements SoundPool.OnLoadCompl
         editor.putString("duration", Integer.toString(duration));
         editor.putString("loud", Integer.toString(loud));
         editor.putString("silent", Integer.toString(silent));
-        editor.putString("isFirst", "NO");
         editor.apply();
         super.onStop();
     }
