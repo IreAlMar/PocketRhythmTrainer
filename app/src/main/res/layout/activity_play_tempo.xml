@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@drawable/beat_music"
     tools:context=".PlayTempoActivity">
 
     <TextView
@@ -24,6 +25,8 @@
         android:layout_margin="@dimen/margin_element"
         android:layout_below="@+id/play_tempo_title"
         android:layout_centerInParent="true"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
         android:id="@+id/text_tempo"
         android:textSize="@dimen/font_size_element"
         android:padding="@dimen/margin_element"/>
